@@ -20,7 +20,7 @@ class MainHeaderView: UIView {
     // MARK: - Subviews
     lazy var totalLabel: UILabel = create {
         $0.text = "0"
-        $0.font = UIFont.boldSystemFont(ofSize: 50)
+        $0.font = UIFont.boldSystemFont(ofSize: 75)
         $0.textColor = .lightGray
         $0.textAlignment = .center
     }
@@ -30,12 +30,15 @@ class MainHeaderView: UIView {
         button.addTarget(self, action: #selector(unitsButtonTapped), for: .touchUpInside)
         button.setTitle("lbs / kg", for: .normal)
         button.setTitleColor(.lightGray, for: .normal)
+        button.titleLabel?.textAlignment = .center
+        
         return button
     }()
     
     lazy var barPickerView: UIPickerView = {
         let view = UIPickerView()
         view.clipsToBounds = true
+        
         return view
     }()
     
@@ -43,7 +46,6 @@ class MainHeaderView: UIView {
         super.init(frame: frame)
         
         updateView()
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -55,14 +57,10 @@ class MainHeaderView: UIView {
 // MARK: - UI
 private extension MainHeaderView {
     func updateView() {
-        let pickerStackView = UIStackView(arrangedSubviews: [barPickerView])
         
-        addSubviews([totalLabel, unitsButton, pickerStackView])
+        addSubviews([totalLabel, unitsButton])
         
         setupConstraints()
-        
-        pickerStackView.anchor(topAnchor, left: totalLabel.rightAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: frame.width / 2, heightConstant: 0)
-
     }
     
     func addSubviews(_ subviews: [UIView]) {
@@ -70,8 +68,18 @@ private extension MainHeaderView {
     }
     func setupConstraints() {
         
-        unitsButton.anchor(totalLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 8, leftConstant: 0, bottomConstant: 8, rightConstant: 0, widthConstant: frame.width / 2, heightConstant: 32)
-        totalLabel.anchor(topAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: frame.width / 2, heightConstant: 0)
+        let pickerStackView = UIStackView(arrangedSubviews: [barPickerView])
+        addSubview(pickerStackView)
+        
+        let halfFrameWidth = frame.width / 2
+        let halfFrameHeight = frame.height / 2
+        
+        totalLabel.anchor(safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: halfFrameWidth)
+        totalLabel.anchorCenterXToSuperview()
+        
+        unitsButton.anchor(safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: halfFrameWidth, heightConstant: halfFrameHeight)
+        
+        pickerStackView.anchor(totalLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: halfFrameHeight)
         
     }
 }

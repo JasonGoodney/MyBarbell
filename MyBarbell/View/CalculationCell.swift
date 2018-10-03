@@ -108,9 +108,9 @@ private extension CalculationCell {
             $0.anchorCenterYToSuperview()
         }
         
-        let buttonWidth: CGFloat = 72
-        let buttonHeight: CGFloat = 44
-        let edgeMargin: CGFloat = 20
+        let buttonWidth: CGFloat = frame.height * 2
+        let buttonHeight: CGFloat = frame.height
+        let edgeMargin: CGFloat = 16
         
         minusButton.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 0, leftConstant: edgeMargin, bottomConstant: 0, rightConstant: 0, widthConstant: buttonWidth, heightConstant: buttonHeight)
         
