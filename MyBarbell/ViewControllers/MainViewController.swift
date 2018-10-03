@@ -30,20 +30,18 @@ class MainViewController: UIViewController {
         }
     }
     let bars: [String] = ["Barbell", "Bell Bar", "Technique"]
-    let weightsInPounds: [Double] = [1, 2.5, 5, 10, 15, 25, 35, 45, 55].reversed()
+    let weightsInPounds: [[Double]] = [[45, 35, 25, 15, 10], [5, 2.5, 1, 0.5], [100, 55]]
     let weightsInKilograms: [Double] = [25, 20, 15, 10, 5, 2.5, 2, 1, 0.5]
     
     var unit: Unit = .pounds
-    lazy var dataSource: [Double] = self.weightsInPounds
+    lazy var dataSource: [[Double]] = self.weightsInPounds
     
     // MARK: - Subviews
     lazy var tableView: UITableView = {
         let view = UITableView()
         view.dataSource = self
         view.delegate = self
-//        view.isScrollEnabled = false
         view.tableFooterView = UIView()
-        view.separatorInset = UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0)
         view.separatorColor = .clear
         view.register(CalculationCell.self, forCellReuseIdentifier: CalculationCell.reuseIdentifier)
         return view
@@ -83,9 +81,9 @@ private extension MainViewController {
     
     func setupConstraints() {
         
-        mainHeaderView.anchor(view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 22, leftConstant: sideMargin, bottomConstant: 0, rightConstant: sideMargin, widthConstant: 0, heightConstant: 156)
+        mainHeaderView.anchor(view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 22, leftConstant: sideMargin, bottomConstant: 0, rightConstant: sideMargin, widthConstant: 0, heightConstant: view.frame.height * 0.25)
         
-        tableView.anchor(mainHeaderView.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 22, leftConstant: sideMargin, bottomConstant: 16, rightConstant: sideMargin, widthConstant: 0, heightConstant: 0)
+        tableView.anchor(mainHeaderView.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 16, leftConstant: sideMargin, bottomConstant: 0, rightConstant: sideMargin, widthConstant: 0, heightConstant: 0)
     }
 }
 
@@ -108,20 +106,21 @@ private extension MainViewController {
     }
 }
 
-
 // MARK: - UITableViewDataSource
 extension MainViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return dataSource.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return dataSource[section].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CalculationCell.reuseIdentifier, for: indexPath) as! CalculationCell
         
-        let weight = dataSource[indexPath.section]
+        let section = dataSource[indexPath.section]
+        
+        let weight = section[indexPath.row]
         
         cell.weight = weightAsString(weight)
         
@@ -134,25 +133,26 @@ extension MainViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 extension MainViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return UIView()
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 12
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return "Standard Plates"
+        case 1:
+            return "Change Plates"
+        case 2:
+            return "Heavy Plates"
+        default:
+            return nil
+        }
     }
 }
 
 // MARK: - CalculationButtonDelegate
 extension MainViewController: CalculationCellDelegate {
     func calculationCellDidTapPlusButton(_ sender: CalculationCell) {
-        guard let index = tableView.indexPath(for: sender)?.section else { return }
+        guard let indexPath = tableView.indexPath(for: sender) else { return }
         
-        let weight = weightsInPounds[index]
+        let weight = weightsInPounds[indexPath.section][indexPath.row]
         
         weightTotal += weight
         
@@ -163,9 +163,9 @@ extension MainViewController: CalculationCellDelegate {
     }
     
     func calculationCellDidTapMinusButton(_ sender: CalculationCell) {
-        guard let index = tableView.indexPath(for: sender)?.section else { return }
+        guard let indexPath = tableView.indexPath(for: sender) else { return }
         
-        let weight = weightsInPounds[index]
+        let weight = weightsInPounds[indexPath.section][indexPath.row]
         
         if weightTotal - weight >= 0 {
             weightTotal -= weight
@@ -178,7 +178,7 @@ extension MainViewController: MainHeaderViewDelegate {
     func mainHeaderViewDidTapUnitsButton() {
         switch unit {
         case .pounds:
-            dataSource = weightsInKilograms
+//            dataSource = weightsInKilograms
             unit = .kilograms
         case .kilograms:
             dataSource = weightsInPounds
