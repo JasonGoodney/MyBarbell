@@ -18,13 +18,13 @@ extension ReuseIdentifiable {
     }
 }
 
+extension UITableViewCell: ReuseIdentifiable {}
 
 protocol CalculationCellDelegate: class {
-    func calculationCellDidTapPlusButton(_ sender: CalculationCell)
-    func calculationCellDidTapMinusButton(_ sender: CalculationCell)
+    func calculationCellDidTapCalculationButton(_ cell: CalculationCell, forCalculationType type: CalculationType)
 }
 
-class CalculationCell: UITableViewCell, ReuseIdentifiable {
+class CalculationCell: UITableViewCell {
     
     // MARK: - Properties
     private let operationFontSize: CGFloat = 28
@@ -55,18 +55,22 @@ class CalculationCell: UITableViewCell, ReuseIdentifiable {
         return button
     }()
     
-    lazy var weightLabel: UILabel = create {
-        $0.text = self.weight
-        $0.textAlignment = .center
-        $0.font = UIFont.systemFont(ofSize: 30, weight: .medium)
-    }
+    lazy var weightLabel: UILabel = {
+        let label = UILabel()
+        label.text = self.weight
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 30, weight: .medium)
+        return label
+    }()
     
-    lazy var plateCountLabel: UILabel = create {
-        $0.text = "\(0)"
-        $0.textAlignment = .center
-        $0.font = UIFont.systemFont(ofSize: 24, weight: .medium)
-        $0.textColor = .lightGray
-    }
+    lazy var plateCountLabel: UILabel = {
+        let label = UILabel()
+        label.text = "\(0)"
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 24, weight: .medium)
+        label.textColor = .lightGray
+        return label
+    }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -93,6 +97,8 @@ private extension CalculationCell {
         addSubview(plusButton)
         
         setupConstraints()
+        
+        selectionStyle = .none
     }
     
     func setupConstraints() {
@@ -109,12 +115,12 @@ private extension CalculationCell {
         }
         
         let buttonWidth: CGFloat = frame.height * 2
-        let buttonHeight: CGFloat = frame.height
+        let buttonMargin: CGFloat = 8
         let edgeMargin: CGFloat = 16
         
-        minusButton.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 0, leftConstant: edgeMargin, bottomConstant: 0, rightConstant: 0, widthConstant: buttonWidth, heightConstant: buttonHeight)
+        minusButton.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, topConstant: buttonMargin, leftConstant: edgeMargin, bottomConstant: buttonMargin, rightConstant: 0, widthConstant: buttonWidth, heightConstant: 0)
         
-        plusButton.anchor(topAnchor, left: nil, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: edgeMargin, widthConstant: buttonWidth, heightConstant: buttonHeight)
+        plusButton.anchor(topAnchor, left: nil, bottom: bottomAnchor, right: rightAnchor, topConstant: buttonMargin, leftConstant: 0, bottomConstant: buttonMargin, rightConstant: edgeMargin, widthConstant: buttonWidth, heightConstant: 0)
         
         plateStackView.anchor(topAnchor, left: minusButton.rightAnchor, bottom: bottomAnchor, right: plusButton.leftAnchor, topConstant: 0, leftConstant: 24, bottomConstant: 0, rightConstant: 24, widthConstant: 0, heightConstant: 0)
         plateStackView.anchorCenterXToSuperview()
@@ -125,11 +131,11 @@ private extension CalculationCell {
 // MARK: - Actions
 private extension CalculationCell {
     @objc func plusButtonTapped() {
-        delegate?.calculationCellDidTapPlusButton(self)
+        delegate?.calculationCellDidTapCalculationButton(self, forCalculationType: .addition)
     }
     
     @objc func minusButtonTapped() {
-        delegate?.calculationCellDidTapMinusButton(self)
+        delegate?.calculationCellDidTapCalculationButton(self, forCalculationType: .subtraction)
     }
 }
 
