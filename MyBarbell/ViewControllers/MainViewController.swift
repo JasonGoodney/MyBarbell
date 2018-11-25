@@ -7,73 +7,91 @@
 //
 
 import UIKit
-
-
-func create<T>(_ setup: ((T) -> Void)) -> T where T: NSObject {
-    let obj = T()
-    setup(obj)
-    return obj    
-}
+import UserNotifications
 
 class MainViewController: UIViewController {
     
-    enum Unit {
-        case pounds
-        case kilograms
-    }
-
     // MARK: - Properties
-    let sideMargin: CGFloat = 16
+    private let sideMargin: CGFloat = 16
     var weightTotal: Double = 0 {
         didSet {
-            mainHeaderView.totalLabel.text = weightAsString(weightTotal)
+            mainHeaderView.totalWeightText = BarbellController.shared.weightAsString(weightTotal)
         }
     }
-    let bars: [String] = ["Barbell", "Bell Bar", "Technique"]
-    let weightsInPounds: [Double] = [1, 2.5, 5, 10, 15, 25, 35, 45, 55].reversed()
-    let weightsInKilograms: [Double] = [25, 20, 15, 10, 5, 2.5, 2, 1, 0.5]
-    
-    var unit: Unit = .pounds
-    lazy var dataSource: [Double] = self.weightsInPounds
+    private var bars: [Barbell] {
+        get {
+            return BarbellController.shared.bars
+        }
+    }
+    private var totalPlateCount = 0
+    var unit: Unit {
+        get {
+            return BarbellController.shared.unit
+        }
+        set (newUnit) {
+            BarbellController.shared.unit = newUnit
+        }
+    }
     
     // MARK: - Subviews
-    lazy var tableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let view = UITableView()
         view.dataSource = self
         view.delegate = self
-//        view.isScrollEnabled = false
         view.tableFooterView = UIView()
-        view.separatorInset = UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0)
         view.separatorColor = .clear
         view.register(CalculationCell.self, forCellReuseIdentifier: CalculationCell.reuseIdentifier)
         return view
     }()
 
-    
-    lazy var mainHeaderView = MainHeaderView()
+    private lazy var mainHeaderView = MainHeaderView()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        view.backgroundColor = .white
+        
+        BarbellController.shared.unit = Unit.valueFromDefaults()
+        
         updateView()
         
+        let row = mainHeaderView.barPickerView.selectedRow(inComponent: 0)
+        let currentBarWeight = bars[row].weight
+        print(bars[row].weightPounds)
+        weightTotal = currentBarWeight
+        
+        tableView.reloadData()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateUnits), name: Notification.Name(MainHeaderView.unitChangedNotification), object: nil)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        mainHeaderView.setupUnitsTableView()
+    }
+        
+    @objc func updateUnits() {
+        tableView.reloadData()
+        mainHeaderView.unitChanged()
+        BarbellController.shared.empty()
+        weightTotal = BarbellController.shared.calculateCurrentWeight(
+            forBar: BarbellController.shared.selectedBarType.barInfo(),
+            andPlatesOnBar: BarbellController.shared.dataSource, by: .addition)
     }
 }
 
 // MARK: - Setup
 private extension MainViewController {
     func updateView() {
-        view.backgroundColor = .white
         
         addSubviews([mainHeaderView, tableView])
         
         setupConstraints()
+        setupHeaderView()
         
         mainHeaderView.delegate = self
         mainHeaderView.barPickerView.delegate = self
         mainHeaderView.barPickerView.dataSource = self
-        mainHeaderView.barPickerView.selectedRow(inComponent: 0)
         
     }
     
@@ -83,109 +101,113 @@ private extension MainViewController {
     
     func setupConstraints() {
         
-        mainHeaderView.anchor(view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 22, leftConstant: sideMargin, bottomConstant: 0, rightConstant: sideMargin, widthConstant: 0, heightConstant: 156)
+        mainHeaderView.anchor(view.topAnchor, left: view.leftAnchor, bottom: tableView.topAnchor, right: view.rightAnchor, topConstant: 22, leftConstant: sideMargin, bottomConstant: 16, rightConstant: sideMargin, widthConstant: 0, heightConstant: 0)
         
-        tableView.anchor(mainHeaderView.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 22, leftConstant: sideMargin, bottomConstant: 16, rightConstant: sideMargin, widthConstant: 0, heightConstant: 0)
-    }
-}
-
-// MARK: - Methods
-private extension MainViewController {
-    func weightAsString(_ weight: Double) -> String {
-        if isWholeNumber(weight) {
-            return "\(Int(weight))"
-        }
-        
-        return "\(weight)"
+        tableView.anchor(mainHeaderView.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: view.frame.height * 0.65)
     }
     
-    func isWholeNumber(_ weight: Double) -> Bool {
-        if floor(weight) == weight {
-            return true
-        }
-        
-        return false
+    func setupHeaderView() {
+        mainHeaderView.unitsText = BarbellController.shared.unit.rawValue
     }
 }
-
 
 // MARK: - UITableViewDataSource
 extension MainViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return dataSource.count
+        return BarbellController.shared.dataSource.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return BarbellController.shared.dataSource[section].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CalculationCell.reuseIdentifier, for: indexPath) as! CalculationCell
         
-        let weight = dataSource[indexPath.section]
+        let section = BarbellController.shared.dataSource[indexPath.section]
         
-        cell.weight = weightAsString(weight)
+        let plate = section[indexPath.row]
+        
+        cell.weight = BarbellController.shared.weightAsString(plate.weight)
+        cell.plateCountLabel.text = "\(plate.count)"
         
         cell.delegate = self
         
-    
         return cell
     }
 }
 
 // MARK: - UITableViewDelegate
 extension MainViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return UIView()
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 12
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return "Standard Plates"
+        case 1:
+            return "Change Plates"
+        case 2:
+            return "Heavy Plates"
+        default:
+            return nil
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44
+        return 64
     }
 }
 
 // MARK: - CalculationButtonDelegate
 extension MainViewController: CalculationCellDelegate {
-    func calculationCellDidTapPlusButton(_ sender: CalculationCell) {
-        guard let index = tableView.indexPath(for: sender)?.section else { return }
-        
-        let weight = weightsInPounds[index]
-        
-        weightTotal += weight
-        
-        guard var plateCount = Int(sender.plateCountLabel.text!) else { return }
-        plateCount += 1
-        sender.plateCountLabel.text = "\(plateCount)"
-        
-    }
     
-    func calculationCellDidTapMinusButton(_ sender: CalculationCell) {
-        guard let index = tableView.indexPath(for: sender)?.section else { return }
+    func calculationCellDidTapCalculationButton(_ cell: CalculationCell, forCalculationType type: CalculationType) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        let plate = BarbellController.shared.dataSource[indexPath.section][indexPath.row]
+        let bar = BarbellController.shared.selectedBarType.barInfo()
         
-        let weight = weightsInPounds[index]
-        
-        if weightTotal - weight >= 0 {
-            weightTotal -= weight
+        switch type {
+        case .addition:
+            plate.count += 1
+        case .subtraction:
+            if plate.count > 0 {
+                plate.count -= 1
+            }
         }
+        
+        plate.count == 0 ?
+            (mainHeaderView.emptyBarButton.isEnabled = false) :
+            (mainHeaderView.emptyBarButton.isEnabled = true)
+    
+        
+        weightTotal = BarbellController.shared.calculateCurrentWeight(forBar: bar, andPlatesOnBar: BarbellController.shared.dataSource, by: type)
+        
+        cell.plateCountLabel.text = "\(plate.count)"
     }
 }
 
 // MARK: - MainHeaderViewDelegate
 extension MainViewController: MainHeaderViewDelegate {
     func mainHeaderViewDidTapUnitsButton() {
+        let calculator = Calculations()
         switch unit {
         case .pounds:
-            dataSource = weightsInKilograms
             unit = .kilograms
         case .kilograms:
-            dataSource = weightsInPounds
             unit = .pounds
         }
         
+        mainHeaderView.unitsText = unit.rawValue
+        weightTotal = calculator.convert(weightTotal, to: unit)
         tableView.reloadData()
+    }
+    
+    func mainHeaderViewLongPressGesturePressed(_ view: MainHeaderView) {
+        BarbellController.shared.totalPlateCount = 0
+        mainHeaderView.emptyBarButton.isEnabled = false
+        weightTotal = BarbellController.shared.empty(
+            BarbellController.shared.selectedBarType.barInfo(), withPlates: BarbellController.shared.dataSource)
+        
+        tableView.reloadData()
+        
     }
 }
 
@@ -196,29 +218,23 @@ extension MainViewController: UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return bars.count
+        return BarbellType.allCases.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return bars[row]
+        let barType = BarbellType.allCases[row].rawValue
+        return barType
     }
-    
 }
 
 // MARK: - UIPickerViewDelegate
 extension MainViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        BarbellController.shared.selectedBarType = BarbellType.allCases[row]
+    
+        weightTotal = BarbellController.shared.calculateCurrentWeight(
+            forBar: BarbellController.shared.selectedBarType.barInfo(),
+            andPlatesOnBar: BarbellController.shared.dataSource, by: .addition)
         
-        // weights are in pounds
-        switch row {
-        case 0:
-            weightTotal += 45
-        case 1:
-            weightTotal += 35
-        case 2:
-            weightTotal += 15
-        default:
-            return
-        }
     }
 }
