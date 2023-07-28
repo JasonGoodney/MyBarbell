@@ -39,7 +39,7 @@ struct ContentView: View {
                 
                 ToolbarItem(placement: .navigationBarLeading) {
                     Menu {
-                        Section("Unit") {
+                        Section {
                             Picker(selection: $store.unitOfMeasure.animation()) {
                                 Text("Pounds (LB)").tag(UnitOfMeasure.pound)
                                 Text("Kilograms (KG)").tag(UnitOfMeasure.kilogram)
