@@ -8,7 +8,9 @@
 
 import Foundation
 
-enum PlateType: Int, CaseIterable {
+enum PlateType: Int, CaseIterable, Identifiable {
+    var id: Int { rawValue }
+    
     case standard = 0
     case change
     case fractional

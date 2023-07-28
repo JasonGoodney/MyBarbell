@@ -21,14 +21,13 @@ struct PlateList: View {
     
     var body: some View {
         List {
-            ForEach(0 ..< PlateType.allCases.count) { type in
+            ForEach(PlateType.allCases) { type in
                 
                 Section(header:
-                    Text(PlateType(rawValue: type)!.description)
+                    Text(type.description)
                         .font(.headline)
                 ) {
-
-                    ForEach(self.plateSet[PlateType(rawValue: type)!]!) { plate in
+                    ForEach(plateSet[type]!) { plate in
                         PlateRow(
                             plate: plate,
                             onEditingChanged: self.onEditingChanged
