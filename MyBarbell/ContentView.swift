@@ -16,8 +16,6 @@ struct ContentView: View {
             VStack(spacing: 10) {
 
                 TotalWeightView(store: store)
-
-                BarbellPicker(store: store)
                 
                 if store.unitOfMeasure == .pound {
                     PlateList(plateSet: store.poundPlateSet, onEditingChanged: { _ in
@@ -41,12 +39,23 @@ struct ContentView: View {
                 
                 ToolbarItem(placement: .navigationBarLeading) {
                     Menu {
-                        Section {
+                        Section("Unit") {
                             Picker(selection: $store.unitOfMeasure.animation()) {
                                 Text("Pounds (LB)").tag(UnitOfMeasure.pound)
                                 Text("Kilograms (KG)").tag(UnitOfMeasure.kilogram)
                             } label: {
                                 Text("Unit")
+                            }
+                        }
+                        
+                        Section {
+                            Picker(selection: $store.barbellType.animation()) {
+                                Text(BarbellType.barbell.description).tag(BarbellType.barbell)
+                                Text(BarbellType.bellaBar.description).tag(BarbellType.bellaBar)
+                                Text(BarbellType.junior.description).tag(BarbellType.junior)
+                                Text(BarbellType.technique.description).tag(BarbellType.technique)
+                            } label: {
+                                Text("Barbell")
                             }
                         }
                         
