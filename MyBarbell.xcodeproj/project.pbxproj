@@ -11,6 +11,17 @@
 		D769E75B2A734334004E2244 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769E75A2A734334004E2244 /* ContentView.swift */; };
 		D769E75D2A734334004E2244 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D769E75C2A734334004E2244 /* Assets.xcassets */; };
 		D769E7602A734334004E2244 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D769E75F2A734334004E2244 /* Preview Assets.xcassets */; };
+		D769E7762A73442F004E2244 /* UnitOfMeasure.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769E7672A73442F004E2244 /* UnitOfMeasure.swift */; };
+		D769E7772A73442F004E2244 /* PlateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769E7682A73442F004E2244 /* PlateType.swift */; };
+		D769E7782A73442F004E2244 /* BarbellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769E7692A73442F004E2244 /* BarbellType.swift */; };
+		D769E7792A73442F004E2244 /* Plate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769E76A2A73442F004E2244 /* Plate.swift */; };
+		D769E77A2A73442F004E2244 /* ListSeparatorStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769E76C2A73442F004E2244 /* ListSeparatorStyle.swift */; };
+		D769E77B2A73442F004E2244 /* CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769E76D2A73442F004E2244 /* CustomFont.swift */; };
+		D769E77D2A73442F004E2244 /* TotalWeightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769E7702A73442F004E2244 /* TotalWeightView.swift */; };
+		D769E77E2A73442F004E2244 /* BarbellPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769E7712A73442F004E2244 /* BarbellPicker.swift */; };
+		D769E77F2A73442F004E2244 /* PlateRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769E7722A73442F004E2244 /* PlateRow.swift */; };
+		D769E7802A73442F004E2244 /* PlateList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769E7732A73442F004E2244 /* PlateList.swift */; };
+		D769E7812A73442F004E2244 /* BarbellStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769E7752A73442F004E2244 /* BarbellStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +30,17 @@
 		D769E75A2A734334004E2244 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D769E75C2A734334004E2244 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D769E75F2A734334004E2244 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		D769E7672A73442F004E2244 /* UnitOfMeasure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitOfMeasure.swift; sourceTree = "<group>"; };
+		D769E7682A73442F004E2244 /* PlateType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlateType.swift; sourceTree = "<group>"; };
+		D769E7692A73442F004E2244 /* BarbellType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarbellType.swift; sourceTree = "<group>"; };
+		D769E76A2A73442F004E2244 /* Plate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plate.swift; sourceTree = "<group>"; };
+		D769E76C2A73442F004E2244 /* ListSeparatorStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSeparatorStyle.swift; sourceTree = "<group>"; };
+		D769E76D2A73442F004E2244 /* CustomFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFont.swift; sourceTree = "<group>"; };
+		D769E7702A73442F004E2244 /* TotalWeightView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TotalWeightView.swift; sourceTree = "<group>"; };
+		D769E7712A73442F004E2244 /* BarbellPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarbellPicker.swift; sourceTree = "<group>"; };
+		D769E7722A73442F004E2244 /* PlateRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlateRow.swift; sourceTree = "<group>"; };
+		D769E7732A73442F004E2244 /* PlateList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlateList.swift; sourceTree = "<group>"; };
+		D769E7752A73442F004E2244 /* BarbellStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarbellStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +75,10 @@
 			children = (
 				D769E7582A734334004E2244 /* MyBarbellApp.swift */,
 				D769E75A2A734334004E2244 /* ContentView.swift */,
+				D769E7662A73442F004E2244 /* Models */,
+				D769E7742A73442F004E2244 /* Store */,
+				D769E76B2A73442F004E2244 /* ViewModifiers */,
+				D769E76E2A73442F004E2244 /* Views */,
 				D769E75C2A734334004E2244 /* Assets.xcassets */,
 				D769E75E2A734334004E2244 /* Preview Content */,
 			);
@@ -65,6 +91,45 @@
 				D769E75F2A734334004E2244 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		D769E7662A73442F004E2244 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D769E7672A73442F004E2244 /* UnitOfMeasure.swift */,
+				D769E7682A73442F004E2244 /* PlateType.swift */,
+				D769E7692A73442F004E2244 /* BarbellType.swift */,
+				D769E76A2A73442F004E2244 /* Plate.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		D769E76B2A73442F004E2244 /* ViewModifiers */ = {
+			isa = PBXGroup;
+			children = (
+				D769E76C2A73442F004E2244 /* ListSeparatorStyle.swift */,
+				D769E76D2A73442F004E2244 /* CustomFont.swift */,
+			);
+			path = ViewModifiers;
+			sourceTree = "<group>";
+		};
+		D769E76E2A73442F004E2244 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D769E7702A73442F004E2244 /* TotalWeightView.swift */,
+				D769E7712A73442F004E2244 /* BarbellPicker.swift */,
+				D769E7722A73442F004E2244 /* PlateRow.swift */,
+				D769E7732A73442F004E2244 /* PlateList.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D769E7742A73442F004E2244 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				D769E7752A73442F004E2244 /* BarbellStore.swift */,
+			);
+			path = Store;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,7 +202,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D769E7762A73442F004E2244 /* UnitOfMeasure.swift in Sources */,
+				D769E7782A73442F004E2244 /* BarbellType.swift in Sources */,
 				D769E75B2A734334004E2244 /* ContentView.swift in Sources */,
+				D769E77F2A73442F004E2244 /* PlateRow.swift in Sources */,
+				D769E7772A73442F004E2244 /* PlateType.swift in Sources */,
+				D769E77E2A73442F004E2244 /* BarbellPicker.swift in Sources */,
+				D769E7812A73442F004E2244 /* BarbellStore.swift in Sources */,
+				D769E77A2A73442F004E2244 /* ListSeparatorStyle.swift in Sources */,
+				D769E77B2A73442F004E2244 /* CustomFont.swift in Sources */,
+				D769E77D2A73442F004E2244 /* TotalWeightView.swift in Sources */,
+				D769E7802A73442F004E2244 /* PlateList.swift in Sources */,
+				D769E7792A73442F004E2244 /* Plate.swift in Sources */,
 				D769E7592A734334004E2244 /* MyBarbellApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -197,7 +273,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -254,7 +330,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -275,11 +351,12 @@
 				DEVELOPMENT_TEAM = K2R548H5LT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -304,11 +381,12 @@
 				DEVELOPMENT_TEAM = K2R548H5LT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
