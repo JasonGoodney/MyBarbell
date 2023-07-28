@@ -65,6 +65,7 @@ struct ContentView: View {
                             } label: {
                                 Label("Clear Plates", systemImage: "trash")
                             }
+                            .disabled(store.barbellIsEmpty)
 
                         }
                     } label: {

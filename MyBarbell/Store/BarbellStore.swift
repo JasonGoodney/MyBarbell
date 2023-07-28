@@ -10,7 +10,7 @@ import Foundation
 
 class BarbellStore: ObservableObject {
     
-    var isEmpty: Bool {
+    var barbellIsEmpty: Bool {
         totalWeight == barbellWeight()
     }
     

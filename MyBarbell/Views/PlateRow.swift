@@ -43,6 +43,7 @@ struct PlateRow: View {
                 Label("Clear", systemImage: "trash")
             }
             .tint(.red)
+            .disabled(plate.countOnBarbell == 0)
         }
     }
 }
