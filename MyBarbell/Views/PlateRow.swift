@@ -35,13 +35,14 @@ struct PlateRow: View {
                     .bold()
             }
         }
-        .swipeActions(edge: .trailing) {
-            Button(role: .destructive) {
+        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+            Button(role: .none) {
                 plate.countOnBarbell = 0
                 onEditingChanged(true)
             } label: {
                 Label("Clear", systemImage: "trash")
             }
+            .tint(.red)
         }
     }
 }
