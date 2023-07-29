@@ -25,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D734733A2A757434004B8692 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D769E7552A734334004E2244 /* MyBarbell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyBarbell.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D769E7582A734334004E2244 /* MyBarbellApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBarbellApp.swift; sourceTree = "<group>"; };
 		D769E75A2A734334004E2244 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -73,6 +74,7 @@
 		D769E7572A734334004E2244 /* MyBarbell */ = {
 			isa = PBXGroup;
 			children = (
+				D734733A2A757434004B8692 /* Info.plist */,
 				D769E7582A734334004E2244 /* MyBarbellApp.swift */,
 				D769E75A2A734334004E2244 /* ContentView.swift */,
 				D769E7662A73442F004E2244 /* Models */,
@@ -351,6 +353,7 @@
 				DEVELOPMENT_TEAM = K2R548H5LT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MyBarbell/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -386,6 +389,7 @@
 				DEVELOPMENT_TEAM = K2R548H5LT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MyBarbell/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
