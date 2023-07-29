@@ -23,9 +23,9 @@ extension BarbellType: CustomStringConvertible {
         case .bellaBar:
             return "Bella Bar"
         case .junior:
-            return "Junior"
+            return "Junior Bar"
         case .technique:
-            return "Technique"
+            return "Technique Bar"
         }
     }
 }

@@ -33,7 +33,7 @@ struct ContentView: View {
             .toolbar {
                 
                 ToolbarItem(placement: .principal) {
-                    Text("My Barbell")
+                    Text("My \(store.barbellType.description)")
                         .font(.headline)
                 }
                 
@@ -49,7 +49,7 @@ struct ContentView: View {
                         }
                         
                         Section {
-                            Picker(selection: $store.barbellType.animation()) {
+                            Picker(selection: $store.barbellType) {
                                 Text(BarbellType.barbell.description).tag(BarbellType.barbell)
                                 Text(BarbellType.bellaBar.description).tag(BarbellType.bellaBar)
                                 Text(BarbellType.junior.description).tag(BarbellType.junior)
