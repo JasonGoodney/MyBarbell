@@ -35,12 +35,12 @@ struct PlateRow: View {
                     .bold()
             }
         }
-        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+        .swipeActions(edge: .trailing) {
             Button(role: .none) {
                 plate.countOnBarbell = 0
                 onEditingChanged(true)
             } label: {
-                Label("Clear", systemImage: "trash")
+                Label("Clear", systemImage: "trash.circle.fill")
             }
             .tint(.red)
             .disabled(plate.countOnBarbell == 0)
